@@ -38,6 +38,7 @@ public class User {
 	@NotBlank
 	private String nomUsuari;
 	
+	@Column(name ="percentExit")
 	private double percentExit;
 	
 	@CreationTimestamp
@@ -49,15 +50,24 @@ public class User {
 	private List<TiradesDau> tiradesDau = new ArrayList<TiradesDau>();
 
 
+	
+
 	public User() {
-		super();
+		this.nomUsuari="ANONIMO";
 	}
 
-	public User(@NotBlank String nomUsuari, double percentExit, List<TiradesDau> tiradesDau) {
-		super();
-		this.nomUsuari = nomUsuari;
+	public User(Long id, @NotBlank String nomUsuari, double percentExit, List<TiradesDau> tiradesDau) {
+		this.id = id;
+		if (nomUsuari.equalsIgnoreCase("ANONIMO"))
+			this.nomUsuari="ANONIMO";
+		else
+			this.nomUsuari = nomUsuari;
 		this.percentExit = percentExit;
 		this.tiradesDau = tiradesDau;
+	}
+	
+	public boolean esAnonimo() {
+		 return (this.nomUsuari.equalsIgnoreCase("ANONIMO"));
 	}
 
 	public String getNomUsuari() {
@@ -65,9 +75,14 @@ public class User {
 	}
 
 	public void setNomUsuari(String nomUsuari) {
-		this.nomUsuari = nomUsuari;
+		if (nomUsuari.equalsIgnoreCase("ANONIMO"))
+			this.nomUsuari="ANONIMO";
+		else
+			this.nomUsuari = nomUsuari;
+	//	this.nomUsuari = nomUsuari;
 	}
-
+	
+	
 	public double getPercentExit() {
 		return percentExit;
 	}
@@ -87,7 +102,19 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [nomUsuari=" + nomUsuari + ", percentExit=" + percentExit + ", dataRegistre=" + dataRegistre
-				+ ", tiradesDau=" + tiradesDau + "]";
+				+ ", tiradesDaus=" + tiradesDau + "]";
+	}
+
+	public Calendar getDataRegistre() {
+		return dataRegistre;
+	}
+
+	public void setDataRegistre(Calendar dataRegistre) {
+		this.dataRegistre = dataRegistre;
+	}
+
+	public Long getId() {
+		return this.id;
 	}
 
 	

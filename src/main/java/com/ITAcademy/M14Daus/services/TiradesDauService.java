@@ -5,8 +5,10 @@ package com.ITAcademy.M14Daus.services;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ITAcademy.M14Daus.DAO.TiradesDauDAO;
 import com.ITAcademy.M14Daus.entity.TiradesDau;
 
 /**
@@ -15,6 +17,9 @@ import com.ITAcademy.M14Daus.entity.TiradesDau;
  */
 @Service
 public class TiradesDauService implements ITiradesDauServices {
+	
+	@Autowired
+	TiradesDauDAO tiradasDao;
 
 	@Override
 	public TiradesDau novaTirada(TiradesDau tirada) {
@@ -24,13 +29,11 @@ public class TiradesDauService implements ITiradesDauServices {
 
 	@Override
 	public List<TiradesDau> listaTiradaByUser(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return tiradasDao.findAllByUsuarioId(id);
 	}
 
 	@Override
 	public int cuantasTiradasByUser(Long id) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -41,9 +44,8 @@ public class TiradesDauService implements ITiradesDauServices {
 	}
 
 	@Override
-	public boolean eliminarTiradasByUser(Long id) {
-		// TODO Auto-generated method stub
-		return false;
+	public void eliminarTiradasByUser(Long id) {
+		tiradasDao.deleteByUsuarioId(id);
 	}
 
 	@Override

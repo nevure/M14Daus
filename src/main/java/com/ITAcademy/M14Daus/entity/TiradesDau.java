@@ -5,11 +5,14 @@ package com.ITAcademy.M14Daus.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import com.ITAcademy.M14Daus.utilidades.UtilidadesJuego;
 
 
 
@@ -25,6 +28,8 @@ public class TiradesDau {
 	private Long id;
 	
 	private int dau1;
+	
+	@Column(name="dau2")
 	private int dau2;
 	private boolean resultat;
 	
@@ -33,19 +38,34 @@ public class TiradesDau {
 	private User usuario;
 
 	public TiradesDau() {
+		this.aJugar();
 	}
 
+	
+	public TiradesDau(User usuario) {
+		this.usuario = usuario;
+		this.aJugar();
+
+	}
+
+
 	public TiradesDau(int dau1, int dau2, boolean resultat, User usuario) {
-		super();
 		this.dau1 = dau1;
 		this.dau2 = dau2;
 		this.resultat = resultat;
 		this.usuario = usuario;
 	}
 
+	public void aJugar() {
+		this.dau1 = UtilidadesJuego.generaAleatorioDesdeUno(6);
+		this.dau2 = UtilidadesJuego.generaAleatorioDesdeUno(6);
+		this.resultat = (this.dau1+this.dau2 == 7);
+		
+	}
 	public int getDau1() {
 		return dau1;
-	}
+	}			
+
 
 	public void setDau1(int dau1) {
 		this.dau1 = dau1;
