@@ -5,7 +5,6 @@ package com.ITAcademy.M14Daus.controller;
 
 import java.util.List;
 
-import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ITAcademy.M14Daus.DAO.UserDao;
 import com.ITAcademy.M14Daus.entity.User;
 import com.ITAcademy.M14Daus.services.UserService;
 
@@ -109,11 +107,19 @@ public class UserController {
 		
 	}
 	
+	/**
+	 * Devolvemos una respuesta con el jugador con peor porcentaje
+	 * @return
+	 */
 	@GetMapping(value="/players/ranking/loser")
 	public ResponseEntity<Object> usuarioPeorPorcentaje(){
 		return ResponseEntity.ok().body(usuarioService.jugadorMenorExito());
 	}
 	
+	/**
+	 * Devolvemos una respuesta con el jugador con mejor porcentaje
+	 * @return
+	 */
 	@RequestMapping(value="/players/ranking/winner", method = RequestMethod.GET)
 	public ResponseEntity<Object> usuarioMejorPorcentaje() {
 		return ResponseEntity.ok().body(usuarioService.jugadorMayorExito());

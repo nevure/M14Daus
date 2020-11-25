@@ -38,20 +38,31 @@ public class User {
 	@NotBlank
 	private String nomUsuari;
 	
-	@Column(name ="percentExit")
-	private double percentExit;
+	
 	
 	@CreationTimestamp
 	@Temporal(TemporalType.DATE)
 	@Column(name = "dataRegistre")
 	private Calendar dataRegistre;
+	
+	private int numLanzamientos=0;
+	private int numVictories=0;
+
+	//@Formula("num_victories / num_lanzamientos * 100")
+	private double percentExit=0.0;
+	
+	public int getNumLanzamientos() {
+		return numLanzamientos;
+	}
+
+	public void setNumLanzamientos(int numLanzamientos) {
+		this.numLanzamientos = numLanzamientos;
+	}
 
 	@OneToMany(mappedBy = "usuario", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
 	private List<TiradesDau> tiradesDau = new ArrayList<TiradesDau>();
 
-
-	
-
+	//Constructores
 	public User() {
 		this.nomUsuari="ANONIMO";
 	}
@@ -65,24 +76,52 @@ public class User {
 		this.percentExit = percentExit;
 		this.tiradesDau = tiradesDau;
 	}
-	
+		
+	/**
+	 * Método que verifica si el nombre de usuario es Anónimo
+	 * @return
+	 */
 	public boolean esAnonimo() {
 		 return (this.nomUsuari.equalsIgnoreCase("ANONIMO"));
 	}
 
-	public String getNomUsuari() {
-		return nomUsuari;
-	}
-
+	
+	
+	/**
+	 * Método que calculo el porcentaje de éxito en función del número de víctorias y el número d elanzamientos.
+	 */
+	public void calculoExito() {
+	
+		this.percentExit = (double)getNumVictories()/getNumLanzamientos() * 100;
+		
+	}		
+	
+	//SETERRS Y GETTERS
+	
+	/**
+	 * Si el nombre de usuario es anónimo se guarda en la base de datgos como ANONIMO (mayúsculas)
+	 * @param nomUsuari
+	 */
 	public void setNomUsuari(String nomUsuari) {
 		if (nomUsuari.equalsIgnoreCase("ANONIMO"))
 			this.nomUsuari="ANONIMO";
 		else
 			this.nomUsuari = nomUsuari;
-	//	this.nomUsuari = nomUsuari;
 	}
 	
 	
+	public int getNumVictories() {
+		return numVictories;
+	}
+
+	public void setNumVictories(int numVictories) {
+		this.numVictories = numVictories;
+	}
+	
+	public String getNomUsuari() {
+		return nomUsuari;
+	}
+
 	public double getPercentExit() {
 		return percentExit;
 	}
@@ -90,7 +129,6 @@ public class User {
 	public void setPercentExit(double percentExit) {
 		this.percentExit = percentExit;
 	}
-
 	public List<TiradesDau> getTiradesDau() {
 		return tiradesDau;
 	}
@@ -99,11 +137,6 @@ public class User {
 		this.tiradesDau = tiradesDau;
 	}
 
-	@Override
-	public String toString() {
-		return "User [nomUsuari=" + nomUsuari + ", percentExit=" + percentExit + ", dataRegistre=" + dataRegistre
-				+ ", tiradesDaus=" + tiradesDau + "]";
-	}
 
 	public Calendar getDataRegistre() {
 		return dataRegistre;
@@ -118,8 +151,13 @@ public class User {
 	}
 
 	
-	
-	
-	
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", nomUsuari=" + nomUsuari + ", percentExit=" + percentExit + ", dataRegistre="
+				+ dataRegistre + ", numLanzamientos=" + numLanzamientos + ", tiradesDau=" + tiradesDau + "]";
+	}
+
+
 
 }

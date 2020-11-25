@@ -17,7 +17,8 @@ import com.ITAcademy.M14Daus.utilidades.UtilidadesJuego;
 
 
 /**
- * @author ru
+ * Entidad que mapea la BD TiradesDau
+ * @author Rubén Rodríguez
  *
  */
 @Entity
@@ -37,6 +38,9 @@ public class TiradesDau {
 	@ManyToOne(targetEntity = User.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
 	private User usuario;
 
+	/*
+	 * Constructores. la llamada a un constructor hace que se ejecute el método aJugar() que es el responsable de lanzar los dados.
+	 */
 	public TiradesDau() {
 		this.aJugar();
 	}
@@ -56,12 +60,17 @@ public class TiradesDau {
 		this.usuario = usuario;
 	}
 
+	/**
+	 * Utilizando la clase utilidades lanzamos dos dados y guardamos el resultado.
+	 */
 	public void aJugar() {
 		this.dau1 = UtilidadesJuego.generaAleatorioDesdeUno(6);
 		this.dau2 = UtilidadesJuego.generaAleatorioDesdeUno(6);
 		this.resultat = (this.dau1+this.dau2 == 7);
 		
 	}
+	
+	//SETTERS Y GETTERS
 	public int getDau1() {
 		return dau1;
 	}			
@@ -87,8 +96,8 @@ public class TiradesDau {
 		this.resultat = resultat;
 	}
 
-	public User getUsuario() {
-		return usuario;
+	public String getUsuario() {
+		return usuario.getNomUsuari();
 	}
 
 	public void setUsuario(User usuario) {

@@ -19,6 +19,6 @@ public interface IUserServices {
 	public Boolean userAnonimo();
 	public Long totalJugadores();
 	public Double sumaPorcentajesExito();
-	
+	public void sumLanzamiento();
 	
 }

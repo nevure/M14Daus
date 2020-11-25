@@ -15,11 +15,14 @@ import com.ITAcademy.M14Daus.entity.User;
 public interface UserDao extends JpaRepository<User, Long> {
 	
 	public Boolean existsByNomUsuari(String nomUsuari);
-	public User minByPercentExit();
-	public Double sumByPercentExit(); // no la utilizamos, pero la dejamos por motivos didácticos.
+	
+	@Query("SELECT u from User u where u.percentExit = (select MIN(uu.percentExit) FROM User uu)")
+	public User minUserByPercentExit();
+	//public Double sumByPercentExit(); // no la utilizamos, pero la dejamos por motivos didácticos.
 	
 	//Podríamos hacerlo como con minBy y que fuera Hibernate quien la generara, pero por motivos didácticos la creamos nosotros. SEría
 	//interesante conocer las diferencias en cuanto a eficiencia. 
-	@Query("SELECT max(u.percentExit) FROM User u")
+	@Query("SELECT u from User u where u.percentExit = (select MAX(uu.percentExit) FROM User uu)")
 	public User maximoAcierto();
+	
 }

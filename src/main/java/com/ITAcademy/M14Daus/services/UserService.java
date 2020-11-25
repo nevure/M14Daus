@@ -7,11 +7,18 @@ import org.springframework.stereotype.Service;
 
 import com.ITAcademy.M14Daus.DAO.UserDao;
 import com.ITAcademy.M14Daus.entity.User;
+/**
+ * 
+ * Clase servicio de usuario
+ * @author Rubén Rodríguez 
+ *
+ */
 @Service
 public class UserService implements IUserServices {
 
 	Double total=0.0;
-
+	
+	//inyectamos el objeto userDao.
 	@Autowired
 	UserDao userDao;
 	@Override
@@ -34,7 +41,7 @@ public class UserService implements IUserServices {
 
 	@Override
 	public User updateUser(User user) {
-		// TODO Auto-generated method stub
+		// la llamada a "creaUsuario" ya hace la función de actualizar los datos.
 		return null;
 	}
 
@@ -71,7 +78,7 @@ public class UserService implements IUserServices {
 
 	@Override
 	public User jugadorMenorExito() {
-		return userDao.minByPercentExit();
+		return userDao.minUserByPercentExit();
 	}
 
 	@Override
@@ -83,6 +90,14 @@ public class UserService implements IUserServices {
 	public Boolean existeUserById(Long id) {
 		return userDao.existsById(id);
 	}
+
+	@Override
+	public void sumLanzamiento() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 	
 	
 

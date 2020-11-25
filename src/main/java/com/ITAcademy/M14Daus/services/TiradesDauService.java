@@ -7,24 +7,27 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ITAcademy.M14Daus.DAO.TiradesDauDAO;
 import com.ITAcademy.M14Daus.entity.TiradesDau;
 
 /**
+ * Clase servicio de Tirades dau
  * @author ru
  *
  */
 @Service
 public class TiradesDauService implements ITiradesDauServices {
 	
+	//Inyectamos el objeto DAO de tiradas
 	@Autowired
 	TiradesDauDAO tiradasDao;
 
 	@Override
 	public TiradesDau novaTirada(TiradesDau tirada) {
-		// TODO Auto-generated method stub
-		return null;
+		return tiradasDao.save(tirada);
+
 	}
 
 	@Override
@@ -32,26 +35,16 @@ public class TiradesDauService implements ITiradesDauServices {
 		return tiradasDao.findAllByUsuarioId(id);
 	}
 
-	@Override
-	public int cuantasTiradasByUser(Long id) {
-		return 0;
-	}
-
-	@Override
-	public int cuantasVictoriasByUser(Long id) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
+		@Override
+	@Transactional
 	public void eliminarTiradasByUser(Long id) {
-		tiradasDao.deleteByUsuarioId(id);
+		tiradasDao.deleteAllByUsuarioId(id);
+
 	}
 
 	@Override
 	public List<TiradesDau> listaTodasTiradas() {
-		// TODO Auto-generated method stub
-		return null;
+		return tiradasDao.findAll();
 	}
 
 	@Override
